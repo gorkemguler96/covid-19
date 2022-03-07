@@ -1,0 +1,100 @@
+/***************************************HEADER CSS*******************************************/
+
+.container {
+    width: 80%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.header {
+    text-align: center;
+    margin-top: 50px;
+}
+
+.header h3 {
+    font-weight: bold;
+    padding-top: 15px;
+    padding-bottom: 5px;
+}
+
+.header p {
+    font-style: italic;
+}
+
+/***************************************TABLE CSS******************************************************/
+
+.Table{
+    text-align: center;
+    margin-top: 4em;
+}
+
+.Table p {
+    margin: 0;
+    padding: 0;
+}
+
+.Table h2 {
+    margin-top: -15px;
+    margin-right: 0;
+    margin-left: 0;
+    margin-bottom: 0;
+    padding: 0;
+}
+
+.Table p,h2{
+    text-align: start;
+}
+
+.Infected {
+    background: rgb(176,214,253);
+}
+
+.Recovered {
+    background: rgb(221,245,226);
+}
+
+.Deaths {
+    background: rgb(243,213,213);
+}
+
+.Active {
+    background: rgb(243,225,200);
+}
+
+.infectedDiv {
+    height: 10px;
+    background: rgb(87,107,254);
+    margin-top: 18px;
+}
+
+.recoveredDiv {
+    height: 10px;
+    background: rgb(110,250,112);
+    margin-top: 18px;
+}
+
+.deathsDiv {
+    height: 10px;
+    background: rgb(249,106,106);
+    margin-top: 18px;
+}
+
+.activeDiv {
+    height: 10px;
+    background: rgb(242,226,100);
+    margin-top: 18px;
+}
+
+/***************************************Selected Input******************************************************/
+
+.SelectedInput {
+    margin-top: 3em;
+    display: flex;
+    justify-content: center;
+    padding: 6px 24px 7px 0px;
+}
+
+.Graphics {
+    margin-top: 15px;
+    text-align: center;
+}
