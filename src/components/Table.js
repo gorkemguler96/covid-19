@@ -9,6 +9,7 @@ function Table(props) {
 
     const dispatch =useDispatch();
     const data = useSelector((state) => state.data.items)
+    console.log(new Date(data.lastUpdate))
 
 
     useEffect(()=>{
@@ -20,9 +21,9 @@ function Table(props) {
             <Row justify={"space-between"}>
                 <Col span={6}>
                     <Card className={"Infected"} title="Infected" bordered={false} style={{ width: 216 }}>
-                        <h2>{data.confirmed.value}</h2>
+                        <h2>{data?.confirmed?.value}</h2>
                         <p style={{fontWeight:500}}>Last Updated at :</p>
-                        <p style={{fontWeight:100}}>Mon Mar 07 2022</p>
+                        <p style={{fontWeight:100}}>{data?.lastUpdate}</p>
                         <p style={{fontWeight:100}}>11:20:34</p>
                         <p style={{fontWeight:400}}>Number of infect cases of COVID-19</p>
                         <div className={"infectedDiv"}></div>
@@ -30,7 +31,7 @@ function Table(props) {
                 </Col>
                 <Col span={6}>
                     <Card className={"Recovered"} title="Recovered" bordered={false} style={{ width: 216 }}>
-                        <h2>{data.recovered.value}</h2>
+                        <h2>{data?.recovered?.value}</h2>
                         <span>
                             <p style={{fontWeight:500}}>Last Updated at :</p>
                             <p style={{fontWeight:100}}>Mon Mar 07 2022</p>
@@ -42,7 +43,7 @@ function Table(props) {
                 </Col>
                 <Col span={6}>
                     <Card className={"Deaths"} title="Deaths" bordered={false} style={{ width: 216 }}>
-                        <h2>{data.deaths.value}</h2>
+                        <h2>{data?.deaths?.value}</h2>
                         <p style={{fontWeight:500}}>Last Updated at :</p>
                         <p style={{fontWeight:100}}>Mon Mar 07 2022</p>
                         <p style={{fontWeight:100}}>11:20:34</p>
@@ -52,7 +53,7 @@ function Table(props) {
                 </Col>
                 <Col span={6}>
                     <Card className={"Active"} title="Active" bordered={false} style={{ width: 216 }}>
-                        <h2>{data.confirmed.value- data.deaths.value}</h2>
+                        <h2>{data?.confirmed?.value- data?.deaths?.value}</h2>
                         <p style={{fontWeight:500}}>Last Updated at :</p>
                         <p style={{fontWeight:100}}>Mon Mar 07 2022</p>
                         <p style={{fontWeight:100}}>11:20:34</p>

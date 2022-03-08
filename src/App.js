@@ -17,7 +17,6 @@ const dispatch = useDispatch()
         <div className={"container"}>
             <Header />
             <Table/>
-            <SelectedInput/>
             <Graphics/>
         </div>
   );
