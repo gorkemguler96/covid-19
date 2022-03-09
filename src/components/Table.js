@@ -1,41 +1,49 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import { Row, Col, Card } from 'antd';
-import {fetchData} from '../redux/dataSlice'
-import {useDispatch, useSelector} from "react-redux";
-
-
+import { useSelector } from "react-redux";
 
 function Table(props) {
+    const ulke = useSelector((state) => state.data.selectInput)
+    const [chart,setChart] = useState([])
+    const [lastGuncelleme,setLastGuncelleme] = useState("")
 
-    const dispatch =useDispatch();
-    const data = useSelector((state) => state.data.items)
-    console.log(new Date(data.lastUpdate))
-
-
-    useEffect(()=>{
-        dispatch(fetchData())
-    },[dispatch])
+    useEffect(()=> {
+        const fetchUlke = async () => {
+            await fetch(`https://covid19.mathdro.id/api/countries/${ulke}`).then((response)=>{
+                response.json().then((json)=> {
+                    setChart(json)
+                    const day = new Date(json.lastUpdate).toString().split(" ",5)
+                    setLastGuncelleme(day)
+                })
+            })
+        }
+        fetchUlke()
+    },[ulke])
 
     return (
         <div className={"Table"}>
             <Row justify={"space-between"}>
                 <Col span={6}>
                     <Card className={"Infected"} title="Infected" bordered={false} style={{ width: 216 }}>
-                        <h2>{data?.confirmed?.value}</h2>
+                        <h2>{chart?.confirmed?.value.toLocaleString('en-US')}</h2>
                         <p style={{fontWeight:500}}>Last Updated at :</p>
-                        <p style={{fontWeight:100}}>{data?.lastUpdate}</p>
-                        <p style={{fontWeight:100}}>11:20:34</p>
+                        <p style={{fontWeight:100}}>
+                            {lastGuncelleme[0]} {lastGuncelleme[1]} {lastGuncelleme[2]} {lastGuncelleme[3]}
+                        </p>
+                        <p style={{fontWeight:100}}>{lastGuncelleme[4]}</p>
                         <p style={{fontWeight:400}}>Number of infect cases of COVID-19</p>
                         <div className={"infectedDiv"}></div>
                     </Card>
                 </Col>
                 <Col span={6}>
                     <Card className={"Recovered"} title="Recovered" bordered={false} style={{ width: 216 }}>
-                        <h2>{data?.recovered?.value}</h2>
+                        <h2>{chart?.recovered?.value.toLocaleString('en-US')}</h2>
                         <span>
                             <p style={{fontWeight:500}}>Last Updated at :</p>
-                            <p style={{fontWeight:100}}>Mon Mar 07 2022</p>
-                            <p style={{fontWeight:100}}>11:20:34</p>
+                            <p style={{fontWeight:100}}>
+                                {lastGuncelleme[0]} {lastGuncelleme[1]} {lastGuncelleme[2]} {lastGuncelleme[3]}
+                            </p>
+                            <p style={{fontWeight:100}}>{lastGuncelleme[4]}</p>
                             <p style={{fontWeight:400}}>Number of recoveries from COVID-19</p>
                             <div className={"recoveredDiv"}></div>
                         </span>
@@ -43,20 +51,24 @@ function Table(props) {
                 </Col>
                 <Col span={6}>
                     <Card className={"Deaths"} title="Deaths" bordered={false} style={{ width: 216 }}>
-                        <h2>{data?.deaths?.value}</h2>
+                        <h2>{chart?.deaths?.value.toLocaleString('en-US')}</h2>
                         <p style={{fontWeight:500}}>Last Updated at :</p>
-                        <p style={{fontWeight:100}}>Mon Mar 07 2022</p>
-                        <p style={{fontWeight:100}}>11:20:34</p>
+                        <p style={{fontWeight:100}}>
+                            {lastGuncelleme[0]} {lastGuncelleme[1]} {lastGuncelleme[2]} {lastGuncelleme[3]}
+                        </p>
+                        <p style={{fontWeight:100}}>{lastGuncelleme[4]}</p>
                         <p style={{fontWeight:400}}>Number of deaths caused by COVID-19</p>
                         <div className={"deathsDiv"}></div>
                     </Card>
                 </Col>
                 <Col span={6}>
                     <Card className={"Active"} title="Active" bordered={false} style={{ width: 216 }}>
-                        <h2>{data?.confirmed?.value- data?.deaths?.value}</h2>
+                        <h2>{(chart?.confirmed?.value- chart?.deaths?.value).toLocaleString('en-US')}</h2>
                         <p style={{fontWeight:500}}>Last Updated at :</p>
-                        <p style={{fontWeight:100}}>Mon Mar 07 2022</p>
-                        <p style={{fontWeight:100}}>11:20:34</p>
+                        <p style={{fontWeight:100}}>
+                            {lastGuncelleme[0]} {lastGuncelleme[1]} {lastGuncelleme[2]} {lastGuncelleme[3]}
+                        </p>
+                        <p style={{fontWeight:100}}>{lastGuncelleme[4]}</p>
                         <p style={{fontWeight:400}}>Number of active cases of COVID-19</p>
                         <div className={"activeDiv"}></div>
                     </Card>

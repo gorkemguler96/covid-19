@@ -7,14 +7,13 @@ function GlobalLineGraphics(props) {
 
     const items = useSelector((state) => state.data.items)
     const [dates,setDates] = useState([])
-    console.log(items)
+    console.log(dates.map((x)=>x))
 
     useEffect(()=> {
         const fetchGlobal = async () => {
             await fetch("https://covid19.mathdro.id/api/daily").then((response)=>{
                 response.json().then((json)=> {
-                    setDates(json.map((x)=>x.reportDate))
-                    console.log(json)
+                    setDates(json)
                 })
             }).catch((error)=>{
                 console.log(error)
@@ -24,33 +23,31 @@ function GlobalLineGraphics(props) {
 
     },[])
 
+
+
     const data = [
         {
-            date: dates,
-            value: `${items?.deaths?.value}`,
-            count: 20000000,
+            date: dates.map((x)=>x.reportDate),
+            infected: dates.map((x)=>x?.totalConfirmed),
+            deaths: dates.map((x)=>x?.deaths.total),
         },
-        {
-            date: dates,
-            value: `${items?.confirmed?.value}`,
-            count: 120000000,
-        }
+
     ];
     const config = {
         data: [data, data],
         xField: 'date',
-        yField: ['value', 'count'],
+        yField: ['infected', 'deaths'],
         geometryOptions: [
             {
                 geometry: 'line',
-                color: '#5B8FF9',
+                color: 'blue',
             },
             {
                 geometry: 'line',
-                color: '#5AD8A6',
+                color: 'red',
             },
         ],
-    };
+    }
 
     return (
         <div className={"globalGraphics"}>

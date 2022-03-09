@@ -1,10 +1,10 @@
 import React, {useEffect, useState} from 'react';
 import {Select,} from 'antd';
 import {useSelector,useDispatch} from "react-redux";
-import axios from "axios";
 import { Column } from '@ant-design/plots';
+import { inputChange } from '../redux/dataSlice'
 import GlobalLineGraphics from "./GlobalLineGraphics";
-
+import BoostrapChart from "./BoostrapChart";
 
 
 
@@ -14,43 +14,24 @@ function Graphics(props) {
     const [chart,setChart] = useState([])
     const [selectInput,setSelectInput] = useState([])
     const dispatch = useDispatch();
-    const items = useSelector((state) => state.data.items)
+    const ulke = useSelector((state) => state.data.selectInput)
 
-    // useEffect(() => {
-    //     const fetchCoins = async () => {
-    //         await fetch(`${proxyURL}${baseURL}`, {
-    //             method: 'GET',
-    //             headers: {
-    //                 'content-Type': 'application/json',
-    //                 'x-access-token': `${apiKey}`,
-    //                 'Access-Control-Allow-Origin': '*'
-    //             }
-    //         }).then((response)=>{
-    //             response.json().then((json)=> {
-    //                 setChart(json.data)
-    //             })
-    //         }).catch((error)=>{
-    //             console.log(error)
-    //         })
-    //     }
-    //     fetchCoins()
-    // },[baseURL, proxyURL, apiKey])
 
-    useEffect(()=> {
-        const fetchCoins = async () => {
-            await fetch("https://covid19.mathdro.id/api/countries/TR").then((response)=>{
-                response.json().then((json)=> {
-                    setChart(json)
-                    console.log(chart)
-                })
-            })
-        }
-        fetchCoins()
-
-    },[])
 
     useEffect(()=> {
         const fetchCountry = async () => {
+            await fetch(`https://covid19.mathdro.id/api/countries/${ulke}`).then((response)=>{
+                response.json().then((json)=> {
+                    setChart(json)
+                })
+            })
+        }
+        fetchCountry()
+
+    },[ulke])
+
+    useEffect(()=> {
+        const countrySiralama = async () => {
             await fetch("https://covid19.mathdro.id/api/countries/").then((response)=>{
                 response.json().then((json)=> {
                     setSelectInput(json)
@@ -59,7 +40,7 @@ function Graphics(props) {
                 console.log(error)
             })
         }
-        fetchCountry()
+        countrySiralama()
 
     },[])
 
@@ -84,7 +65,7 @@ function Graphics(props) {
     const config = {
         data,
         xField: 'type',
-        yField: 'quantity',
+        yField: ['quantity'],
         label: {
             position: 'middle',
             style: {
@@ -103,21 +84,24 @@ function Graphics(props) {
                 alias: 'category',
             },
             sales: {
-                alias: 'quantity',
+                alias: "quantity",
             },
         },
     };
-
+    const handleChange = (e) => {
+        dispatch(inputChange(e))
+    }
 
     return (
         <div className={"Graphics"}>
-            <Select style={{width:426}} defaultValue="Afghanistan">
+            <Select onChange={handleChange} style={{width:426}} defaultValue="Afghanistan">
                 {selectInput?.countries?.map((x,index)=> (
                     <Option key={x.name} value={x.index}>{x?.name}</Option>
                     )
                 )}
             </Select>
-            <GlobalLineGraphics />
+            {/*<GlobalLineGraphics />*/}
+            <BoostrapChart/>
             <Column  className={"barGraphics"} {...config} />
         </div>
     );
