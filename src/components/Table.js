@@ -20,6 +20,7 @@ function Table(props) {
         fetchUlke()
     },[ulke])
 
+
     return (
         <div className={"Table"}>
             <Row justify={"space-between"}>
