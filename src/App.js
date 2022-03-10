@@ -5,7 +5,6 @@ import { decrement } from './redux/dataSlice'
 import style from './style.css'
 import Header from "./components/Header";
 import Table from "./components/Table";
-import SelectedInput from "./components/SelectedInput";
 import Graphics from "./components/Graphics";
 
 function App(){

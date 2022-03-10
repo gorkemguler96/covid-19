@@ -11,7 +11,7 @@ export const dataSlice = createSlice({
     name: 'data',
     initialState: {
         items: [],
-        selectInput: "Afghanistan"
+        selectInput: null,
     },
     reducers: {
         inputChange: (state,action) => {

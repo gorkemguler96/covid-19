@@ -12,6 +12,7 @@ function CountryGraph(props) {
     const [selectInput,setSelectInput] = useState([])
     const dispatch = useDispatch();
     const ulke = useSelector((state) => state.data.selectInput)
+    const defaultInputValue = "Afghanistan"
 
 
 
