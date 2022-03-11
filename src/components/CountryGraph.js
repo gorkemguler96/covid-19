@@ -1,9 +1,8 @@
 import React, {useEffect, useState} from 'react';
+import { Column } from '@ant-design/plots';
 import {Select} from "antd";
-import {useDispatch, useSelector} from "react-redux";
 import {inputChange} from "../redux/dataSlice";
-import {Column} from "@ant-design/plots";
-import GlobalGraph from "./GlobalGraph";
+import {useDispatch, useSelector} from "react-redux";
 
 function CountryGraph(props) {
 
@@ -12,9 +11,6 @@ function CountryGraph(props) {
     const [selectInput,setSelectInput] = useState([])
     const dispatch = useDispatch();
     const ulke = useSelector((state) => state.data.selectInput)
-    const defaultInputValue = "Afghanistan"
-
-
 
     useEffect(()=> {
         const fetchCountry = async () => {
@@ -25,9 +21,7 @@ function CountryGraph(props) {
             })
         }
         fetchCountry()
-
     },[ulke])
-
     useEffect(()=> {
         const countrySiralama = async () => {
             await fetch("https://covid19.mathdro.id/api/countries/").then((response)=>{
@@ -39,50 +33,59 @@ function CountryGraph(props) {
             })
         }
         countrySiralama()
-
     },[])
 
     const data = [
         {
             type: 'Recovered',
-            quantity: `${chart?.recovered?.value}`,
+            value: `${chart?.recovered?.value}`,
         },
         {
             type: 'Deaths',
-            quantity: `${chart?.deaths?.value}`,
+            value:`${chart?.deaths?.value}`,
         },
+
         {
             type: 'Active',
-            quantity: `${chart?.confirmed?.value- chart?.deaths?.value}`,
+            value: `${chart?.confirmed?.value- chart?.deaths?.value}`,
         },
         {
             type: 'Infected',
-            quantity: `${chart?.confirmed?.value}`,
+            value: `${chart?.confirmed?.value}`,
         },
     ];
+    const paletteSemanticRed = 'rgba(243,102,74,0.67)';
+    const infected = 'rgba(91,143,249,0.78)';
+    const active = 'rgba(235,248,143,0.86)';
+    const recovered = 'rgb(169,248,143)';
     const config = {
         data,
         xField: 'type',
-        yField: ['quantity'],
+        yField: 'value',
+        seriesField: '',
+        color: ({ type }) => {
+            if (type === 'Deaths') {
+                return paletteSemanticRed;
+            }
+            else if ( type === 'Active') {
+                return active;
+            }
+            else if (type === 'Recovered'){
+                return recovered
+            }
+            return infected;
+        },
         label: {
-            position: 'middle',
             style: {
                 fill: '#FFFFFF',
-                opacity: 0.6,
+                opacity: 1,
             },
         },
+        legend: false,
         xAxis: {
             label: {
-                autoHide: true,
+                autoHide: false,
                 autoRotate: false,
-            },
-        },
-        meta: {
-            type: {
-                alias: 'category',
-            },
-            sales: {
-                alias: "quantity",
             },
         },
     };
@@ -92,15 +95,12 @@ function CountryGraph(props) {
 
     return (
         <div>
-            <div className={"Graphics"}>
-                <Select onChange={handleChange} style={{width:426}} defaultValue="Afghanistan">
-                    {selectInput?.countries?.map((x,index)=> (
-                            <Option key={x.name} value={x.index}>{x?.name}</Option>
-                        )
-                    )}
-                </Select>
-                <Column  className={"barGraphics"} {...config} />
-            </div>
+            <Select onChange={handleChange} style={{width:426}} defaultValue={ulke}>
+                {selectInput?.countries?.map((x,index)=>
+                    <Option key={x.name} value={x.index}>{x?.name}</Option>
+                )}
+            </Select>
+            <Column className={"barGraphics"} {...config} />
         </div>
     );
 }

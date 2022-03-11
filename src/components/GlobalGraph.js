@@ -7,18 +7,17 @@ import {useDispatch} from "react-redux";
 function GlobalGraph({inputDefaultValue}) {
 
     const [data,setData] = useState([])
-    const [deneme,setDeneme] = useState([])
     const dispatch = useDispatch();
-    const [selectInput,setSelectInput] = useState([])
+    const Global = "Global"
+    const [selectInput,setSelectInput] = useState( {Global})
     const { Option } = Select;
+    console.log(selectInput)
 
     useEffect(()=> {
         const globalGraph = async () => {
             await fetch("https://covid19.mathdro.id/api/daily/").then((response)=>{
                 response.json().then((json)=> {
-                    setDeneme(json.map((x)=>x.deaths))
                     setData(json.map((x)=>x))
-
                 })
             }).catch((error)=>{
                 console.log(error)
@@ -26,12 +25,11 @@ function GlobalGraph({inputDefaultValue}) {
         }
         globalGraph()
     },[])
-
     useEffect(()=> {
         const countrySiralama = async () => {
             await fetch("https://covid19.mathdro.id/api/countries/").then((response)=>{
                 response.json().then((json)=> {
-                    setSelectInput(json)
+                    setSelectInput({...selectInput,json})
                 })
             }).catch((error)=>{
                 console.log(error)
@@ -44,19 +42,18 @@ function GlobalGraph({inputDefaultValue}) {
     const config = {
         data: [data, data],
         xField: 'reportDate',
-        yField: [`totalConfirmed`,`${data?.map(x=>x?.deaths?.total)}`],
+        yField: ['totalConfirmed'],
         geometryOptions: [
             {
                 geometry: 'line',
-                color: '#5B8FF9',
+                color: 'rgba(91,143,249,0.76)',
             },
             {
                 geometry: 'line',
-                color: '#5AD8A6',
+                color: '#fc5e5e',
             },
         ],
     };
-
     const handleChange = (e) => {
         dispatch(inputChange(e))
     }
@@ -64,12 +61,11 @@ function GlobalGraph({inputDefaultValue}) {
     return (
         <div>
             <Select onChange={handleChange} style={{width:426}} defaultValue={inputDefaultValue}>
-                {selectInput?.countries?.map((x,index)=> (
+                {selectInput?.json?.countries?.map((x,index)=>
                         <Option key={x.name} value={x.index}>{x?.name}</Option>
-                    )
                 )}
             </Select>
-            <DualAxes {...config} />
+            <DualAxes className={"barGraphics"} {...config} />
         </div>
     );
 }

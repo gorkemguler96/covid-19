@@ -25,29 +25,15 @@ function CountryTable(props) {
         <div className={"Table"}>
             <Row justify={"space-between"}>
                 <Col span={6}>
-                    <Card className={"Infected"} title="Infected" bordered={false} style={{ width: 216 }}>
-                        <h2>{chart?.confirmed?.value.toLocaleString('en-US')}</h2>
+                    <Card className={"Recovered"} title="Recovered" bordered={false} style={{ width: 216 }}>
+                        <h2>{chart?.recovered?.value.toLocaleString('en-US')}</h2>
                         <p style={{fontWeight:500}}>Last Updated at :</p>
                         <p style={{fontWeight:100}}>
                             {lastGuncelleme[0]} {lastGuncelleme[1]} {lastGuncelleme[2]} {lastGuncelleme[3]}
                         </p>
                         <p style={{fontWeight:100}}>{lastGuncelleme[4]}</p>
-                        <p style={{fontWeight:400}}>Number of infect cases of COVID-19</p>
-                        <div className={"infectedDiv"}></div>
-                    </Card>
-                </Col>
-                <Col span={6}>
-                    <Card className={"Recovered"} title="Recovered" bordered={false} style={{ width: 216 }}>
-                        <h2>{chart?.recovered?.value.toLocaleString('en-US')}</h2>
-                        <span>
-                            <p style={{fontWeight:500}}>Last Updated at :</p>
-                            <p style={{fontWeight:100}}>
-                                {lastGuncelleme[0]} {lastGuncelleme[1]} {lastGuncelleme[2]} {lastGuncelleme[3]}
-                            </p>
-                            <p style={{fontWeight:100}}>{lastGuncelleme[4]}</p>
-                            <p style={{fontWeight:400}}>Number of recoveries from COVID-19</p>
-                            <div className={"recoveredDiv"}></div>
-                        </span>
+                        <p style={{fontWeight:400}}>Number of recoveries from COVID-19</p>
+                        <div className={"recoveredDiv"}></div>
                     </Card>
                 </Col>
                 <Col span={6}>
@@ -72,6 +58,18 @@ function CountryTable(props) {
                         <p style={{fontWeight:100}}>{lastGuncelleme[4]}</p>
                         <p style={{fontWeight:400}}>Number of active cases of COVID-19</p>
                         <div className={"activeDiv"}></div>
+                    </Card>
+                </Col>
+                <Col span={6}>
+                    <Card className={"Infected"} title="Infected" bordered={false} style={{ width: 216 }}>
+                        <h2>{chart?.confirmed?.value.toLocaleString('en-US')}</h2>
+                        <p style={{fontWeight:500}}>Last Updated at :</p>
+                        <p style={{fontWeight:100}}>
+                            {lastGuncelleme[0]} {lastGuncelleme[1]} {lastGuncelleme[2]} {lastGuncelleme[3]}
+                        </p>
+                        <p style={{fontWeight:100}}>{lastGuncelleme[4]}</p>
+                        <p style={{fontWeight:400}}>Number of infect cases of COVID-19</p>
+                        <div className={"infectedDiv"}></div>
                     </Card>
                 </Col>
             </Row>

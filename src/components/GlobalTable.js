@@ -7,14 +7,12 @@ function GlobalTable(props) {
 
     const dispatch = useDispatch();
     const items = useSelector(state => state.data.items)
-    const count = useSelector((state) => state.data.items)
     const [day,setDay] = useState([])
 
 
     useEffect(()=>{
         dispatch(fetchData())
     },[])
-
     useEffect(()=>{
         setDay(new Date(items?.lastUpdate).toString().split(" ",5))
     },[items])
@@ -23,29 +21,15 @@ function GlobalTable(props) {
         <div className={"Table"}>
             <Row justify={"space-between"}>
                 <Col span={6}>
-                    <Card className={"Infected"} title="Infected" bordered={false} style={{ width: 216 }}>
-                        <h2>{items?.confirmed?.value.toLocaleString('en-US')}</h2>
+                    <Card className={"Recovered"} title="Recovered" bordered={false} style={{ width: 216 }}>
+                        <h2>{items?.recovered?.value}</h2>
                         <p style={{fontWeight:500}}>Last Updated at :</p>
                         <p style={{fontWeight:100}}>
                             {day[0]} {day[1]} {day[2]} {day[3]}
                         </p>
                         <p style={{fontWeight:100}}>{day[4]}</p>
-                        <p style={{fontWeight:400}}>Number of infect cases of COVID-19</p>
-                        <div className={"infectedDiv"}></div>
-                    </Card>
-                </Col>
-                <Col span={6}>
-                    <Card className={"Recovered"} title="Recovered" bordered={false} style={{ width: 216 }}>
-                        <h2>{items?.recovered?.value}</h2>
-                        <span>
-                            <p style={{fontWeight:500}}>Last Updated at :</p>
-                            <p style={{fontWeight:100}}>
-                                {day[0]} {day[1]} {day[2]} {day[3]}
-                            </p>
-                            <p style={{fontWeight:100}}>{day[4]}</p>
-                            <p style={{fontWeight:400}}>Number of recoveries from COVID-19</p>
-                            <div className={"recoveredDiv"}></div>
-                        </span>
+                        <p style={{fontWeight:400}}>Number of recoveries from COVID-19</p>
+                        <div className={"recoveredDiv"}></div>
                     </Card>
                 </Col>
                 <Col span={6}>
@@ -70,6 +54,18 @@ function GlobalTable(props) {
                         <p style={{fontWeight:100}}>{day[4]}</p>
                         <p style={{fontWeight:400}}>Number of active cases of COVID-19</p>
                         <div className={"activeDiv"}></div>
+                    </Card>
+                </Col>
+                <Col span={6}>
+                    <Card className={"Infected"} title="Infected" bordered={false} style={{ width: 216 }}>
+                        <h2>{items?.confirmed?.value.toLocaleString('en-US')}</h2>
+                        <p style={{fontWeight:500}}>Last Updated at :</p>
+                        <p style={{fontWeight:100}}>
+                            {day[0]} {day[1]} {day[2]} {day[3]}
+                        </p>
+                        <p style={{fontWeight:100}}>{day[4]}</p>
+                        <p style={{fontWeight:400}}>Number of infect cases of COVID-19</p>
+                        <div className={"infectedDiv"}></div>
                     </Card>
                 </Col>
             </Row>

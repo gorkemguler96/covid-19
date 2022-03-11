@@ -6,7 +6,6 @@ export const fetchData = createAsyncThunk('data/getDataAsync', async (inputNumbe
     return res.data
 })
 
-
 export const dataSlice = createSlice({
     name: 'data',
     initialState: {

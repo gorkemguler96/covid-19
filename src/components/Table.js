@@ -7,15 +7,9 @@ function Table(props) {
 
     const inputValue = useSelector((state) => state.data.selectInput)
 
-
     return (
         <div className={"Table"}>
-            {inputValue ? (
-                <CountryTable/>
-            )
-                :
-                <GlobalTable/>
-            }
+            {inputValue ? <CountryTable/> : <GlobalTable/>}
         </div>
     );
 }
