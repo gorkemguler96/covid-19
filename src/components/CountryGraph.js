@@ -91,6 +91,7 @@ function CountryGraph(props) {
     };
     const handleChange = (e) => {
         dispatch(inputChange(e))
+
     }
 
     return (
