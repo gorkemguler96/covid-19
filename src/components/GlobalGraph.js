@@ -62,7 +62,7 @@ function GlobalGraph({inputDefaultValue}) {
         <div>
             <Select onChange={handleChange} style={{width:426}} defaultValue={inputDefaultValue}>
                 {selectInput?.json?.countries?.map((x,index)=>
-                        <Option key={x.name} value={x.index}>{x?.name}</Option>
+                    <Option key={x.name} value={x.index}>{x?.name}</Option>
                 )}
             </Select>
             <DualAxes className={"barGraphics"} {...config} />
