@@ -55,9 +55,7 @@ function GlobalGraph({inputDefaultValue}) {
         ],
     };
     const handleChange = (e) => {
-
         dispatch(inputChange(e))
-
     }
 
     return (
