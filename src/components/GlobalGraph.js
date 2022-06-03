@@ -1,8 +1,10 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, PureComponent } from 'react';
 import { DualAxes } from '@ant-design/plots';
 import {Select} from "antd";
 import {inputChange} from "../redux/dataSlice";
 import {useDispatch} from "react-redux";
+
+
 
 function GlobalGraph({inputDefaultValue}) {
 
@@ -57,6 +59,7 @@ function GlobalGraph({inputDefaultValue}) {
     const handleChange = (e) => {
         dispatch(inputChange(e))
     }
+
 
     return (
         <div>
